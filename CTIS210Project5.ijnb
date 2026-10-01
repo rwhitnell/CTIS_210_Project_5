@@ -1,0 +1,247 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 5,
+  "metadata": {
+    "language_info": {
+      "name": "java"
+    }
+  },
+  "cells": [
+    {
+      "id": "6d2bb2e3-2629-4f03-b0f1-56c0bdab1eef",
+      "cell_type": "markdown",
+      "source": "### Goals for this project\n* Practice generating random numbers in specified ranges\n* Take advantage of randomness to generate arrays of students with random values for their attributes\n* Work with loops to examine the attributes of these students\n* Use these tools to evaluate a large number of students\n\n**Note**: You must have completed Project 4 before starting this project. You will be using ideas (and even code) from that project here.",
+      "metadata": {
+        "language": "markdown",
+        "id": "6d2bb2e3-2629-4f03-b0f1-56c0bdab1eef"
+      }
+    },
+    {
+      "id": "00edb2f7-7bde-413e-8b12-c313d3e824f9",
+      "cell_type": "markdown",
+      "source": "#### Initial random numbers task\n\nJava provides a functionality called `Random` that lets us generate random numbers and random `boolean` (`true`/`false`) values. The next code cell gives three examples of generating random values. Run the cell several times to see that the values do change randomly.\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "00edb2f7-7bde-413e-8b12-c313d3e824f9"
+      }
+    },
+    {
+      "id": "333b5233-93c0-46dc-9c0c-0ca548380a46",
+      "cell_type": "code",
+      "source": "// Magic code: Build an object that can generate random numbers\n// Do not change this line of code\n\nRandom rand = new Random();\n\n// Example 1: Generate and display a random integer in the range [0, 99]\nint randomInteger = rand.nextInt(0, 100);\nSystem.out.println(\"Random integer in [0, 99]:\" + randomInteger);\n\n// Example 2: Generate and display a random decimal value in the range [1, 3.5]\ndouble randomDouble = rand.nextDouble(1, 3.5);\nSystem.out.println(\"Random decimal in [1, 3.5]:\" + randomDouble);\n\n// Example 3: Generate and display a random true/false value\nboolean randomBoolean = rand.nextBoolean();\nSystem.out.println(\"Random boolean: \" + randomBoolean);\n\n",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "46647b3c-a8b0-42a0-9b2f-09addea0ea94",
+      "cell_type": "markdown",
+      "source": "Using those examples, complete this task by adding code to the next cell that meets the following goals.\n\n* Generate and display a random integer in the range [10, 500]\n* Generate and display a random decimal value in the range [-5.5, 7.5]\n* Generate and display a random decimal value in the range [0, 2 $\\pi$] (Remember that you can use `Math.PI` to get the value of $\\pi$ that Java thinks is most precise.)",
+      "metadata": {
+        "language": "markdown",
+        "id": "46647b3c-a8b0-42a0-9b2f-09addea0ea94"
+      }
+    },
+    {
+      "id": "5c3da54c-259d-4664-9bce-e383c20f825d",
+      "cell_type": "code",
+      "source": "// Add code for these goals below this line.",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "11d04d21-c155-44f6-9bbc-ac9a834a7586",
+      "cell_type": "markdown",
+      "source": "#### Extending random numbers task\n\nSometimes we want to generate a random integer from an evenly spaced set of integers. For example, suppose we want to select a value from the set [3, 8, 13, 18, 23, 28]. Here is the logic we use.\n\n* First, there are six values in the set. So we start with \n\n```java\nrand.nextInt(0, 7)\n```\n\nto generate a number from the range [0, 1, 2, 3, 4, 5].\n\n* Then, the integers we want have a spacing of 5. If we multiply the random number by 5:\n\n```java\n5 * rand.nextInt(0, 6)\n```\n\nour range is now [0, 5, 10, 15, 20, 25].\n\n* Finally, the first value in our set is 3, so we add 3 to each value:\n```java\n5 * rand.nextInt(0, 6) + 3\n```\n\nto get [3, 8, 13, 18, 23, 28]. \n\nThe next code cell has this code so that you can test that the random numbers this expression generates are only within that set. Run the cell a few times to verify that.\n\nComplete this task by generating a random integer in the range [-8, -6, -4, -2, 0, 2, 4, 6, 8].\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "11d04d21-c155-44f6-9bbc-ac9a834a7586"
+      }
+    },
+    {
+      "id": "c11862fe-3aa3-4476-85d6-dd7def7f3568",
+      "cell_type": "code",
+      "source": "// Code for the example\n\nint spacedInteger = 5 * rand.nextInt(0, 6) + 3; \nSystem.out.println(\"Spaced integer: \" + spacedInteger);\n\n// Add code below this line to complete the task\n",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "871b6b6d-fe86-4d43-9156-a83f51df1c44",
+      "cell_type": "markdown",
+      "source": "*Note:* The following cell contains code to calculate registration points like in the last project. Run the cell now, but don't make any changes to it.",
+      "metadata": {
+        "language": "markdown",
+        "id": "871b6b6d-fe86-4d43-9156-a83f51df1c44"
+      }
+    },
+    {
+      "id": "8ef76c3a-28f5-4524-a1f1-3442d329ddd0",
+      "cell_type": "code",
+      "source": "// Magic code: This cell contains a basic version of calcTotalCredits() and calculatePoints()\n// Do not modify this code\n\npublic double calcTotalCredits(double guilfordCredits, double transferCredits, double otherCredits) {\n    return guilfordCredits + transferCredits + otherCredits;\n}\n\npublic double calculatePoints(double gCredits, double tCredits, \n    double oCredits, boolean studyAway) {\n\n    double registrationPoints = 0;\n    double totalCredits = calcTotalCredits(gCredits, tCredits, oCredits);\n    if (totalCredits >= 88) {\n        registrationPoints += 4;\n    }\n\n    if (totalCredits >= 56 && totalCredits <= 87) {\n        registrationPoints += 3;\n    }\n\n    if (totalCredits >= 24 && totalCredits <= 56) {\n        registrationPoints += 2;\n    }\n\n    if (totalCredits < 24) {\n        registrationPoints += 1;\n    }\n\n    if (studyAway) {\n        registrationPoints *= 1.25;\n    }\n\n    if (tCredits > gCredits || oCredits > gCredits || tCredits + oCredits > gCredits) {\n        registrationPoints /= 2;\n    }\n\n    if (totalCredits > 120) {\n        registrationPoints *= 1.5;\n    }\n    \n\n    return registrationPoints;\n}",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "f6c24f4f-a58e-4e33-b686-8687d4dc8876",
+      "cell_type": "markdown",
+      "source": "#### Attribute range task\n\nIn the previous project, you started the process of defining attributes for a Guilford student that would help determine the priority they would have for registration. Here are the four attributes that were originally defined with the identifier we used. All are decimal values, except for the last one that can be `true` or `false`.\n\n* Credits earned at Guilford: `guilfordCredits` \n* Transfer credits: `transferCredits`\n* Other credits: `otherCredits`\n* Is the student studying away?: `studyAway`.\n\nIn the next code cell, write code that declares each of these variables and assigns a random value to it in the following ranges.\n\n* `guilfordCredits`: [0, 92]\n* `transferCredits`: [0, 32]\n* `otherCredits`: [0, 12]\n* `studyAway`: `true` or `false`\n\nWrite statements that display each of these values as we've done before. Run the cell a few times to convince yourself that the randomness is present.\n\nAfter you do that, run the cell that follows to define a simple `calculatePoints` method. If you've done everything correctly, you should see a registration points value. ",
+      "metadata": {
+        "language": "markdown",
+        "id": "f6c24f4f-a58e-4e33-b686-8687d4dc8876"
+      }
+    },
+    {
+      "id": "01e91229-40c5-4e52-89d0-1fc149a90fee",
+      "cell_type": "code",
+      "source": "// Add code for first part of attribute range task below this line\n\n",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "baeef208-e68c-4a1b-9c28-f1f1ea95fb48",
+      "cell_type": "markdown",
+      "source": "Test this work by running the next cell. You should then be able to run further tests by running the previous cell and the next cell several times to see that you get reasonable values.",
+      "metadata": {
+        "language": "markdown",
+        "id": "baeef208-e68c-4a1b-9c28-f1f1ea95fb48"
+      }
+    },
+    {
+      "id": "454e9f32-1654-4286-a988-fe71aa21fc19",
+      "cell_type": "code",
+      "source": "System.out.println(\"Total registration points: \" + calculatePoints(guilfordCredits, \n    transferCredits, otherCredits, studyAway);",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "42656283-17c2-487c-953d-6506fd724abd",
+      "cell_type": "markdown",
+      "source": "#### Generate a bunch of random students task\n\nLooking at one random student at a time isn't very efficient. So let's build an ***array*** of students that we can test all at once. An array is an indexed sequence of information. For example, a `String` object with the data \"CTIS 210\" can be thought of as containing an array of `char` values that can be visualized as\n\n|index|character|\n|:--:|:--:|\n|0|`'C'`|\n|1|`'T'`|\n|2|`'I'`|\n|3|`'S'`|\n|4|`' '`|\n|5|`'2'`|\n|6|`'1'`|\n|7|`'0'`|\n\nWe can declare and initialize such an array with the following statement.\n\n```java\nchar[] stringChars = {'C', 'T', 'I', 'S', ' ', '2', '1', '0'};\n```\n\nNow suppose we want to declare an initialize an array of Guilford credit values for five students. We can do that with the following statement:\n\n```java\ndouble[] studentGuilfordCredits = {28, 12, 44, 76, 32};\n```\n\nExtend that in the following code cell to declare arrays for transfer credits, other credits, and whether the student is studying away. Note that the last array should be declared as `boolean[]`. Then display them using the statement given as a model.\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "42656283-17c2-487c-953d-6506fd724abd"
+      }
+    },
+    {
+      "id": "12a6cb23-4a24-45b5-adb6-e1f2ce7f3667",
+      "cell_type": "code",
+      "source": "// Add additional arrays for all the attributes\n\ndouble[] studentGuilfordCredits = {28, 12, 44, 76, 32};\n\n\nSystem.out.println(\"Guilford Credits: \" + Arrays.toString(studentGuilfordCredits));",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "d0c4597e-1f64-4de9-b1e6-e1d9ae006866",
+      "cell_type": "markdown",
+      "source": "#### Create a really large number of random students task\n\nThat's not yet particularly random, and it's not that many students, so suppose we now want to build an array with 18,357 students, each with a random value for each attribute. That's a repetitive task that we need to run a specified number of times, so we will use a counting loop. The next few cells will work through these steps.",
+      "metadata": {
+        "language": "markdown",
+        "id": "d0c4597e-1f64-4de9-b1e6-e1d9ae006866"
+      }
+    },
+    {
+      "id": "8b164351-a3e9-472f-ade0-b6231847598a",
+      "cell_type": "markdown",
+      "source": "##### Declaring arrays with a specified size.\n\nWe an array where we can store 18,357 values of Guilford credits. We're going to use a random number generator to generate those values, but for now we just want to reserve the memory to do that. Here's the code for that.\n\n```java\ndouble[] studentGuilfordCredits = new double[18357];\n```\n\nIn the next code cell, add this line, and then do the same for the other three attributes that we've been using.",
+      "metadata": {
+        "language": "markdown",
+        "id": "8b164351-a3e9-472f-ade0-b6231847598a"
+      }
+    },
+    {
+      "id": "224ac629-28a5-4e02-b751-6fdb4fc54eae",
+      "cell_type": "code",
+      "source": "// Declare arrays for the attributes\n\n",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "f4f6d473-542a-4b54-a84a-626e85a646f7",
+      "cell_type": "markdown",
+      "source": "##### Writing a loop to fill the array\n\nA counting loop needs three elements: Initialize, test and update.\n\n* Initialize: We'll declare a variable `index` and set it equal to zero. \n* Test: We'll want to run the loop as long as `index` is smaller than the size of the array.\n* Update: We should increase `index` by one each time the loop body runs.\n\nThat leads to the following code.\n\n```java\nint index = 0;\nwhile (index < 18357) {\n    studentGuilfordCredits[index] = rand.nextDouble(0, 92);\n    index++;\n}\n```\n\nEnter this code into the next cell. To test it, print out any value of the array. For example, `studentGuilfordCredits[24]` will give the value of the 25th element of the array. Try several different values of the array.\n\nAfter that, add code that fills an array for each of the other attributes. Test all the generation of values by printing out the attributes for a single student. ",
+      "metadata": {
+        "language": "markdown",
+        "id": "f4f6d473-542a-4b54-a84a-626e85a646f7"
+      }
+    },
+    {
+      "id": "dd0d55c1-ca2e-4b72-aaad-02ec145101b0",
+      "cell_type": "code",
+      "source": "// Enter code to fill the arrays\n\n",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "b8df7e64-a1d9-47d5-9eb9-216e49f40c1e",
+      "cell_type": "markdown",
+      "source": "#### Calculating all the registration points task\n\nAll the pieces are now present to calculate the registration points for each of our 18,357 students. In the next code cell, declare a `registrationPoints` array with 18,357 elements. Then, write a loop that uses the `calculatePoints` method for each student to fill the array. Finally, add three statements that display the registration points values for different students.",
+      "metadata": {
+        "language": "markdown",
+        "id": "b8df7e64-a1d9-47d5-9eb9-216e49f40c1e"
+      }
+    },
+    {
+      "id": "84c0e04c-d58f-492b-a030-82c781281084",
+      "cell_type": "code",
+      "source": "// Add the loop for calculating registration points\n\n",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "a29395ad-190d-448b-b7dd-fc4b6cc4f936",
+      "cell_type": "markdown",
+      "source": "#### Summarizing data using histograms task\n\nIn analyzing whether an algorithm is working effectively to evaluate information about an individual, we often want to have summary information about all the students. One type of summary is a ***histogram***, which counts the data into equally spaced bins. Let's assume that the values will fall between 0 and 10 points and we'll use 10 bins. \n\n(**Note** that you don't write any code here; this section just provides the overall logic you should understand.)\n\n* Declare and instantiate an array with ten elements that represent the ten bins with subranges 0-1, 1-2, 2-3, and so on, up to > 9 points. \n* Loop through the students.\n* For each student, get their score and find which subrange it belongs to. (We'll use rounding.)\n* Increment the corresponding bin by one.\n* When we're done with the loop, display the result using `Arrays.toString(histogram)`.\n\n\nYou'll now implement this plan in the next code cell to create a histogram of the `registrationPoints` array. The only part that is new is the subrange part. For our data, if you use the identifier `histogram` for the histogram array and `index` for the counter, then the following statements will work:\n\n```java\nint bin = (int)registrationPoints[index];\nhistogram[bin]++;\n```\n\nAdd statements to the next code cell that implement this plan.\n",
+      "metadata": {
+        "language": "markdown",
+        "id": "a29395ad-190d-448b-b7dd-fc4b6cc4f936"
+      }
+    },
+    {
+      "id": "0fef236b-1c65-4180-a952-4e518cf8caa7",
+      "cell_type": "code",
+      "source": "// Add the histogram-generating loop here\n\n",
+      "metadata": {
+        "language": "java"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "id": "b3ae3556-8229-4ac4-a9b2-eb9c2a41e3c6",
+      "cell_type": "markdown",
+      "source": "#### Optional challenge exercises\n\nHere are several optional challenge exercises.\n\n* Our use of `nextBoolean` in setting the value for whether the student is studying away gives that a 50% chance, which is far too high. Implement instead a conditional statement in the appropriate loop above that changes that percentage. The basic logic is to generate a random decimal value between 0 and 1. Then, if that value is less than whatever cutoff you decide on (like 0.05 for a 5% change), set the study away value to `true`. Otherwise set it to false.\n* All our registration point values turn out to be between 0 and 10, so it's easy to set the index value when we have 10 bins. Try rewriting the code so that it works for any number of bins. Assume that the range of each bin is equally spaced. \n    * How will you calculate the bin that each value goes into?\n    * What would you do if that calculation gives a negative value or a value larger than the largest bin index?\n* Related to the previous challenge exercise, prompt the user for the number of students and the number of bins to use in the histogram.\n* What we've done so far relies on our knowing that the data we're analyzing falls in the range \\[0, 10\\]. But what if it doesn't? Write a method that can create a histogram with 10 bins out of any numeric data without initial knowledge of the range. Doing so requires at least the following:\n    * Finding the minimum and maximum value of the elements in the array. You can write a loop to accomplish this goal or research Java utilities that can help, such as `Collections.min()` and `Collections.max()`.\n    * Given this information and the number of bins, calculating the size of each bin (that is, what part of the total range it covers).\n    * For a given value, determining which bin it falls into.\n    * And, of course, you can generalize your work to any number of bins.\n* Exercise 7.7 in the Downey and Mayfield textbook. Note that the return type is an array. And you can test this method with very long strings. \n",
+      "metadata": {
+        "language": "markdown",
+        "id": "b3ae3556-8229-4ac4-a9b2-eb9c2a41e3c6"
+      }
+    }
+  ]
+}
